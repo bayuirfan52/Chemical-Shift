@@ -4,7 +4,6 @@ package kimia.lib;
 import kimia.data.CH;
 import kimia.data.Error;
 import kimia.data.H;
-//import com.bayurf.kimia.ui.dialog.Alert;
 import kimia.utils.Constant;
 import kimia.utils.Log;
 
@@ -33,44 +32,46 @@ public class Library {
                     Error foundErrorData = new Error();
                     Thread.sleep(10);
 
-                    Log.i("ERR | CURRENT", err + " | " + currentError);
+                    Log.d("ERR | CURRENT", err + " | " + currentError);
                     if (currentError != err) {
                         if (firstStart) {
                             currentError = err;
                             foundErrorData.setError(err);
                             foundErrorData.setIdR1(data.get(i).getId());
                             foundErrorData.setIdR2(data.get(j).getId());
+                            foundErrorData.setTotalCountId(data.get(i).getId() + data.get(j).getId());
                             errors.add(foundErrorData);
                             firstStart = false;
                         } else if (err < currentError) {
-                            Log.e("NEW_DATA", "new error = " + err + ", id = " + data.get(i).getId() + "," + data.get(j).getId());
+                            Log.i("NEW_DATA", "new error = " + err + ", id = " + data.get(i).getId() + "," + data.get(j).getId());
                             foundErrorData.setError(err);
                             foundErrorData.setIdR1(data.get(i).getId());
                             foundErrorData.setIdR2(data.get(j).getId());
+                            foundErrorData.setTotalCountId(data.get(i).getId() + data.get(j).getId());
                             errors.clear();
                             errors.add(foundErrorData);
                             currentError = err;
                         } else {
-                            Log.i("FINDING_DATA", "continue Finding");
+                            Log.d("FINDING_DATA", "continue Finding");
                         }
                     } else {
-                        if ((data.get(i).getId() + data.get(j).getId()) != (errors.get(0).getIdR1() + errors.get(0).getIdR2())) {
-                            Log.e("ADD_DATA", "add error = " + err + ", id = " + data.get(i).getId() + "," + data.get(j).getId());
+                        if (!isHasDuplicate(errors, data.get(i).getId() + data.get(j).getId())) {
+                            Log.i("ADD_DATA", "add error = " + err + ", id = " + data.get(i).getId() + "," + data.get(j).getId());
                             foundErrorData.setError(err);
                             foundErrorData.setIdR1(data.get(i).getId());
                             foundErrorData.setIdR2(data.get(j).getId());
+                            foundErrorData.setTotalCountId(data.get(i).getId() + data.get(j).getId());
                             errors.add(foundErrorData);
                         } else {
-                            Log.i("FINDING_DATA", "Same Data. Continue Finding");
+                            Log.d("FINDING_DATA", "Same Data. Continue Finding");
                         }
                     }
                     j++;
 
-                    Log.i("UPDATE POSITION", String.valueOf(position++));
+                    Log.d("UPDATE POSITION", String.valueOf(position++));
+                    view.updateProgressCH(100 * i / data.size());
                 }
             }
-
-            view.updateProgressCH(50);
 
             for (Error error : errors) {
                 CH ch = new CH();
@@ -91,8 +92,6 @@ public class Library {
                 Log.i("DATA_FOUND", "data found = " + error.getError() + ", value = CH2" + allR.toString());
                 output.add(ch);
             }
-
-            view.updateProgressCH(100);
         } catch (InterruptedException e){
             Log.e(InterruptedException.class.getName(), e.getLocalizedMessage());
         }
@@ -118,9 +117,9 @@ public class Library {
                         double err = Math.abs(input - Constant.CH2 - data.get(i).getData() - data.get(j).getData() - data.get(k).getData());
                         Error foundErrorData = new Error();
 
-                        Thread.sleep(10);
+                        Thread.sleep(1);
 
-                        Log.i("ERR | CURRENT",err + " | " + currentError);
+                        Log.d("ERR | CURRENT",err + " | " + currentError);
                         if (currentError != err){
                             if (firstStart) {
                                 currentError = err;
@@ -128,41 +127,45 @@ public class Library {
                                 foundErrorData.setIdR1(data.get(i).getId());
                                 foundErrorData.setIdR2(data.get(j).getId());
                                 foundErrorData.setIdR3(data.get(k).getId());
+                                foundErrorData.setTotalCountId(data.get(i).getId() + data.get(j).getId() + data.get(k).getId());
                                 errors.add(foundErrorData);
                                 firstStart = false;
                             } else if (err < currentError){
-                                Log.e("NEW_DATA", "new error = " + err + ", id = " + data.get(i).getId() + "," + data.get(j).getId() + "," + data.get(k).getId());
+                                Log.i("NEW_DATA", "new error = " + err + ", id = " + data.get(i).getId() + "," + data.get(j).getId() + "," + data.get(k).getId());
                                 foundErrorData.setError(err);
                                 foundErrorData.setIdR1(data.get(i).getId());
                                 foundErrorData.setIdR2(data.get(j).getId());
                                 foundErrorData.setIdR3(data.get(k).getId());
+                                foundErrorData.setTotalCountId(data.get(i).getId() + data.get(j).getId() + data.get(k).getId());
                                 errors.clear();
                                 errors.add(foundErrorData);
                                 currentError = err;
                             } else {
-                                Log.i("FINDING_DATA", "continue Finding");
+                                Log.d("FINDING_DATA", "continue Finding");
                             }
                         } else {
-                            if ((data.get(i).getId() + data.get(j).getId() + data.get(k).getId()) != (errors.get(0).getIdR1() + errors.get(0).getIdR2() + errors.get(0).getIdR3())) {
-                                Log.e("ADD_DATA", "add error = " + err + ", id = " + data.get(i).getId() + "," + data.get(j).getId() + "," + data.get(k).getId());
+                            if (!isHasDuplicate(errors, data.get(i).getId() + data.get(j).getId() + data.get(k).getId())) {
+                                Log.i("ADD_DATA", "add error = " + err + ", id = " + data.get(i).getId() + "," + data.get(j).getId() + "," + data.get(k).getId());
                                 foundErrorData.setError(err);
                                 foundErrorData.setIdR1(data.get(i).getId());
                                 foundErrorData.setIdR2(data.get(j).getId());
                                 foundErrorData.setIdR3(data.get(k).getId());
+                                foundErrorData.setTotalCountId(data.get(i).getId() + data.get(j).getId() + data.get(k).getId());
                                 errors.add(foundErrorData);
                             } else {
-                                Log.i("FINDING_DATA", "Same Data. Continue Finding");
+                                Log.d("FINDING_DATA", "Same Data. Continue Finding");
                             }
                         }
-                        Log.i("UPDATE POSITION", String.valueOf(position++));
+                        Log.d("UPDATE POSITION", String.valueOf(position++));
                         k++;
                     }
-                    Log.i("END J = " + j, "------------------------ J -----------------------");
+                    Log.d("END J = " + j, "------------------------ J -----------------------");
                 }
-                Log.i("END I = " + i, "------------------------ I -----------------------");
+                Log.d("END I = " + i, "------------------------ I -----------------------");
+                
+                view.updateProgressCH(100 * i / data.size());
             }
-
-            view.updateProgressCH(50);
+            
             for (Error error : errors){
                 CH ch = new CH();
                 StringBuilder allR = new StringBuilder();
@@ -180,8 +183,6 @@ public class Library {
                 Log.i("DATA_FOUND", "data found = " + error.getError() + ", value = CH2" + allR.toString());
                 output.add(ch);
             }
-
-            view.updateProgressCH(100);
         } catch (InterruptedException e){
             Log.e(InterruptedException.class.getName(), e.getLocalizedMessage());
         }
@@ -204,8 +205,8 @@ public class Library {
                         double err = Math.abs(input - Constant.CH2 - data.get(i).getCis() - data.get(j).getGem() - data.get(k).getTrans());
                         Error foundErrorData = new Error();
 
-                        Thread.sleep(5);
-                        Log.i("ERR | CURRENT",err + " | " + currentError);
+                        Thread.sleep(1);
+                        Log.d("ERR | CURRENT",err + " | " + currentError);
                         if (currentError != err){
                             if (firstStart) {
                                 firstStart = false;
@@ -214,38 +215,42 @@ public class Library {
                                 foundErrorData.setIdR1(data.get(i).getId());
                                 foundErrorData.setIdR2(data.get(j).getId());
                                 foundErrorData.setIdR3(data.get(k).getId());
+                                foundErrorData.setTotalCountId(data.get(i).getId() + data.get(j).getId() + data.get(k).getId());
                                 errors.add(foundErrorData);
                             } else if (err < currentError){
-                                Log.e("NEW_DATA", "new error = " + err + ", id = " + data.get(i).getId() + "," + data.get(j).getId() + "," + data.get(k).getId());
+                                Log.i("NEW_DATA", "new error = " + err + ", id = " + data.get(i).getId() + "," + data.get(j).getId() + "," + data.get(k).getId());
                                 foundErrorData.setError(err);
                                 foundErrorData.setIdR1(data.get(i).getId());
                                 foundErrorData.setIdR2(data.get(j).getId());
                                 foundErrorData.setIdR3(data.get(k).getId());
+                                foundErrorData.setTotalCountId(data.get(i).getId() + data.get(j).getId() + data.get(k).getId());
                                 errors.clear();
                                 errors.add(foundErrorData);
                                 currentError = err;
                             } else {
-                                Log.i("FINDING_DATA", "continue Finding");
+                                Log.d("FINDING_DATA", "continue Finding");
                             }
                         } else {
-                            if ((data.get(i).getId() + data.get(j).getId() + data.get(k).getId()) == (errors.get(0).getIdR1() + errors.get(0).getIdR2() + errors.get(0).getIdR3())){
-                                Log.e("ADD_DATA", "add error = " + err + ", id = " + data.get(i).getId() + "," + data.get(j).getId() + "," + data.get(k).getId());
+                            if (!isHasDuplicate(errors, data.get(i).getId() + data.get(j).getId() + data.get(k).getId())){
+                                Log.i("ADD_DATA", "add error = " + err + ", id = " + data.get(i).getId() + "," + data.get(j).getId() + "," + data.get(k).getId());
                                 foundErrorData.setError(err);
                                 foundErrorData.setIdR1(data.get(i).getId());
                                 foundErrorData.setIdR2(data.get(j).getId());
                                 foundErrorData.setIdR3(data.get(k).getId());
+                                foundErrorData.setTotalCountId(data.get(i).getId() + data.get(j).getId() + data.get(k).getId());
                                 errors.add(foundErrorData);
                             } else {
-                                Log.i("FINDING_DATA", "Same Data. Continue Finding");
+                                Log.d("FINDING_DATA", "Same Data. Continue Finding");
                             }
                         }
                         k++;
-                        Log.i("UPDATE POSITION", String.valueOf(position++));
+                        Log.d("UPDATE POSITION", String.valueOf(position++));
                     }
                 }
-            }
 
-            view.updateProgressH(50);
+                view.updateProgressH(100 * i / data.size());
+            }
+            
             for (Error error : errors){
                 H h = new H();
                 StringBuilder allR = new StringBuilder();
@@ -263,11 +268,20 @@ public class Library {
                 output.add(h);
             }
 
-            view.updateProgressH(100);
-
         } catch (InterruptedException e){
             Log.e(InterruptedException.class.getName(), e.getLocalizedMessage());
         }
         return output;
+    }
+    
+    private static boolean isHasDuplicate(ArrayList<Error> e, int currentTotal){
+        boolean value = false;
+        for(Error err : e){
+            if (err.getTotalCountId() == currentTotal){
+                value =  true;
+                
+            }
+        }
+        return value;
     }
 }

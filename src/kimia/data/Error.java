@@ -4,6 +4,16 @@ public class Error implements Comparable<Error>{
     private int idR1;
     private int idR2;
     private int idR3;
+    private int totalCountId;
+
+    public int getTotalCountId() {
+        return totalCountId;
+    }
+
+    public void setTotalCountId(int totalCountId) {
+        this.totalCountId = totalCountId;
+    }
+    
     private double error;
 
     public int getIdR1() {

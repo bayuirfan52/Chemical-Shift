@@ -22,6 +22,10 @@ import kimia.ui.Alert;
 import kimia.utils.CSVReader;
 import kimia.utils.Constant;
 
+/**
+ *
+ * @author bayuirfan
+ */
 public class Main extends javax.swing.JFrame implements LibraryView{
 
     /**
@@ -34,12 +38,16 @@ public class Main extends javax.swing.JFrame implements LibraryView{
     private final String CH_FILENAME = "ch";
     private final String H_FILENAME = "h";
     
+    /**
+     *
+     */
     public Main() {
         initComponents();
         mainPanel = (CardLayout) (featuresPane.getLayout());
         progressBar.setVisible(false);
         progressHBar.setVisible(false);
         this.setLocationRelativeTo(null);
+        
     }
 
     /**
@@ -193,7 +201,9 @@ public class Main extends javax.swing.JFrame implements LibraryView{
             }
         });
 
+        progressBar.setToolTipText("");
         progressBar.setName(""); // NOI18N
+        progressBar.setStringPainted(true);
 
         jLabel5.setText("Hasil Prediksi");
 
@@ -272,7 +282,7 @@ public class Main extends javax.swing.JFrame implements LibraryView{
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         inputTextField.getAccessibleContext().setAccessibleName("inputTextField");
@@ -294,6 +304,8 @@ public class Main extends javax.swing.JFrame implements LibraryView{
                 processHButtonActionPerformed(evt);
             }
         });
+
+        progressHBar.setStringPainted(true);
 
         jLabel2.setText("Hasil Prediksi");
 
@@ -370,7 +382,6 @@ public class Main extends javax.swing.JFrame implements LibraryView{
 
     private void processButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_processButtonActionPerformed
         // TODO add your handling code here:
-        progressBar.setVisible(true);
         if (inputTextField.getText().equalsIgnoreCase("")){
             Alert.showDialog("Alert", "Input harus diisi");
         } else if (!ch2Box.isSelected() && !chBox.isSelected()){
@@ -382,26 +393,25 @@ public class Main extends javax.swing.JFrame implements LibraryView{
             double input = Double.parseDouble(inputTextField.getText());
 
             if (chBox.isSelected()){
-                ArrayList<CH> resultCH = new ArrayList<>();
-                resultCH.addAll(lib.predictCH(input, chArrayList));
-                DefaultListModel<String> ch = new DefaultListModel<>();
-                for (int i = 0; i < resultCH.size(); i++) {
-                    ch.add(i, "CH" + resultCH.get(i).getR());
-                }
-                listCH.setModel(ch);
+                Runnable chRun = () -> {
+                    progressBar.setVisible(true);
+                    execCH(input);
+                    progressBar.setVisible(false);
+                };
+                Thread chThread = new Thread(chRun);
+                chThread.start();
             }
 
             if (ch2Box.isSelected()){
-                ArrayList<CH> resultCH2 = new ArrayList<>();
-                resultCH2.addAll(lib.predictCH2(input, chArrayList));
-                DefaultListModel<String> ch = new DefaultListModel<>();
-                for (int i = 0; i < resultCH2.size(); i++){
-                    ch.add(i, "CH2" + resultCH2.get(i).getR());
-                }
-                listCH2.setModel(ch);
+                Runnable ch2Run = () -> {
+                    progressBar.setVisible(true);
+                    execCH2(input);
+                    progressBar.setVisible(false);
+                };
+                Thread ch2Thread = new Thread(ch2Run);
+                ch2Thread.start();
             }
         }
-        progressBar.setVisible(false);
     }//GEN-LAST:event_processButtonActionPerformed
 
     private void sideMenuHPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sideMenuHPanelMouseClicked
@@ -436,7 +446,6 @@ public class Main extends javax.swing.JFrame implements LibraryView{
 
     private void processHButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_processHButtonActionPerformed
         // TODO add your handling code here:
-        progressHBar.setVisible(true);
         if (inputHTextField.getText().equalsIgnoreCase("")){
             Alert.showDialog("Alert", "Input harus diisi");
         } else {
@@ -445,15 +454,22 @@ public class Main extends javax.swing.JFrame implements LibraryView{
             hArrayList.addAll(CSVReader.loadHData(H_FILENAME));
             double input = Double.parseDouble(inputHTextField.getText());
             
-            ArrayList<H> resultH = new ArrayList<>();
-            resultH.addAll(lib.predictCisTransGem(input, hArrayList));
-            DefaultListModel<String> h = new DefaultListModel<>();
-            for (int i = 0; i < resultH.size(); i++) {
-                h.add(i, "H" + resultH.get(i).getR());
-            }
-            listH.setModel(h);
+            Runnable r = () -> {
+                progressHBar.setVisible(true);
+                ArrayList<H> resultH = new ArrayList<>();
+                resultH.addAll(lib.predictCisTransGem(input, hArrayList));
+                DefaultListModel<String> h = new DefaultListModel<>();
+                for (int i = 0; i < resultH.size(); i++) {
+                    h.add(i, "H" + resultH.get(i).getR());
+                }
+                listH.setModel(h);
+                progressHBar.setVisible(false);
+            };
+            
+            Thread hRun = new Thread(r);
+            hRun.start();
         }
-        progressHBar.setVisible(false);
+        
     }//GEN-LAST:event_processHButtonActionPerformed
 
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
@@ -525,13 +541,43 @@ public class Main extends javax.swing.JFrame implements LibraryView{
     private javax.swing.JPanel sideMenuHPanel;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     *
+     * @param progress
+     */
     @Override
     public void updateProgressCH(int progress) {
         progressBar.setValue(progress);
+        progressBar.setString(String.valueOf(progress) + "%");
     }
 
+    /**
+     *
+     * @param progress
+     */
     @Override
     public void updateProgressH(int progress) {
         progressHBar.setValue(progress);
+        progressHBar.setString(String.valueOf(progress) + "%");
+    }
+    
+    private void execCH(double input){
+        ArrayList<CH> resultCH = new ArrayList<>();
+        resultCH.addAll(lib.predictCH(input, chArrayList));
+        DefaultListModel<String> ch = new DefaultListModel<>();
+        for (int i = 0; i < resultCH.size(); i++) {
+            ch.add(i, "CH" + resultCH.get(i).getR());
+        }
+        listCH.setModel(ch);
+    }
+    
+    private void execCH2(double input){
+        ArrayList<CH> resultCH2 = new ArrayList<>();
+        resultCH2.addAll(lib.predictCH2(input, chArrayList));
+        DefaultListModel<String> ch = new DefaultListModel<>();
+        for (int i = 0; i < resultCH2.size(); i++){
+            ch.add(i, "CH2" + resultCH2.get(i).getR());
+        }
+        listCH2.setModel(ch);
     }
 }
