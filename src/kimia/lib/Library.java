@@ -70,24 +70,23 @@ public class Library {
             }
         }
 
-        for (Error error : errors) {
+        errors.forEach((error) -> {
             CH ch = new CH();
             StringBuilder allR = new StringBuilder();
 
-            for (CH dataCH : data) {
+            data.stream().map((dataCH) -> {
                 if (error.getIdR1() == dataCH.getId()) {
                     allR.append(" - ").append(dataCH.getR());
                 }
-
-                if (error.getIdR2() == dataCH.getId()) {
-                    allR.append(" - ").append(dataCH.getR());
-                }
-            }
+                return dataCH;
+            }).filter((dataCH) -> (error.getIdR2() == dataCH.getId())).forEachOrdered((dataCH) -> {
+                allR.append(" - ").append(dataCH.getR());
+            });
             ch.setData(error.getError());
             ch.setR(allR.toString());
             Log.i("DATA_FOUND", "data found = " + error.getError() + ", value = CH2" + allR.toString());
             output.add(ch);
-        }
+        });
         
         return output;
     }
@@ -155,22 +154,24 @@ public class Library {
             view.updateProgressCH(100 * i / data.size());
         }
 
-        for (Error error : errors){
+        errors.forEach((error) -> {
             CH ch = new CH();
             StringBuilder allR = new StringBuilder();
-            for (CH dataCH : data){
+            data.stream().map((dataCH) -> {
                 if (error.getIdR1() == dataCH.getId()) allR.append(" - ").append(dataCH.getR());
-
+                return dataCH;
+            }).map((dataCH) -> {
                 if (error.getIdR2() == dataCH.getId()) allR.append(" - ").append(dataCH.getR());
-
-                if (error.getIdR3() == dataCH.getId()) allR.append(" - ").append(dataCH.getR());
-            }
+                return dataCH;
+            }).filter((dataCH) -> (error.getIdR3() == dataCH.getId())).forEachOrdered((dataCH) -> {
+                allR.append(" - ").append(dataCH.getR());
+            });
 
             ch.setData(error.getError());
             ch.setR(allR.toString());
             Log.i("DATA_FOUND", "data found = " + error.getError() + ", value = CH2" + allR.toString());
             output.add(ch);
-        }
+        });
             
         return output;
     }
@@ -233,21 +234,23 @@ public class Library {
             view.updateProgressH(100 * i / data.size());
         }
 
-        for (Error error : errors){
+        errors.forEach((Error error) -> {
             H h = new H();
             StringBuilder allR = new StringBuilder();
-            for (H dataH : data){
+            data.stream().map((dataH) -> {
                 if (error.getIdR1() == dataH.getId()) allR.append(" - ").append(dataH.getR());
-
+                return dataH;
+            }).map((dataH) -> {
                 if (error.getIdR2() == dataH.getId()) allR.append(" - ").append(dataH.getR());
-
-                if (error.getIdR3() == dataH.getId()) allR.append(" - ").append(dataH.getR());
-            }
-
+                return dataH;
+            }).filter((dataH) -> (error.getIdR3() == dataH.getId())).forEachOrdered((dataH) -> {
+                allR.append(" - ").append(dataH.getR());
+            });
+            
             h.setR(allR.toString());
             Log.i("DATA_FOUND", "data found = " + error.getError() + ", value = H" + allR.toString());
             output.add(h);
-        }
+        });
             
         return output;
     }
@@ -257,7 +260,6 @@ public class Library {
         for(Error err : e){
             if (err.getTotalCountId() == currentTotal){
                 value =  true;
-                
             }
         }
         return value;

@@ -11,8 +11,10 @@ package kimia.ui;
  */
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import kimia.data.CH;
 import kimia.data.H;
 import kimia.lib.Library;
@@ -21,11 +23,8 @@ import kimia.ui.dialog.AboutDialog;
 import kimia.ui.dialog.Alert;
 import kimia.utils.CSVReader;
 import kimia.utils.Constant;
+import kimia.utils.Log;
 
-/**
- *
- * @author bayuirfan
- */
 public class Main extends javax.swing.JFrame implements LibraryView{
 
     /**
@@ -48,6 +47,11 @@ public class Main extends javax.swing.JFrame implements LibraryView{
         progressHBar.setVisible(false);
         this.setLocationRelativeTo(null);
         
+        try {
+            this.setIconImage(new ImageIcon(Toolkit.getDefaultToolkit().getClass().getResource("/res/images/icon.png")).getImage());
+        } catch(Exception e) {
+            Log.e("IMAGE EXCEPTION", e.getLocalizedMessage());
+        }
     }
 
     /**
