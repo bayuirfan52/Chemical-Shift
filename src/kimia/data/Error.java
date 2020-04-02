@@ -1,6 +1,6 @@
 package kimia.data;
 
-public class Error implements Comparable<Error>{
+public class Error{
     private int idR1;
     private int idR2;
     private int idR3;
@@ -46,10 +46,5 @@ public class Error implements Comparable<Error>{
 
     public void setError(double error) {
         this.error = error;
-    }
-
-    @Override
-    public int compareTo(Error error){
-        return (this.getError() < error.getError() ? -1 : (this.getError() > error.getError() ? 0 : 1));
     }
 }
