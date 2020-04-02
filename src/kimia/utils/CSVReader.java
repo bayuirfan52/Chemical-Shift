@@ -7,7 +7,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Objects;
-import kimia.ui.Alert;
+import kimia.ui.dialog.Alert;
 import static kimia.utils.Constant.COMMA_REGEX;
 
 public class CSVReader {

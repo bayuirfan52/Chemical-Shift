@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kimia;
+package kimia.ui;
 
 /**
  *
@@ -17,8 +17,8 @@ import kimia.data.CH;
 import kimia.data.H;
 import kimia.lib.Library;
 import kimia.lib.LibraryView;
-import kimia.ui.AboutDialog;
-import kimia.ui.Alert;
+import kimia.ui.dialog.AboutDialog;
+import kimia.ui.dialog.Alert;
 import kimia.utils.CSVReader;
 import kimia.utils.Constant;
 
@@ -94,9 +94,8 @@ public class Main extends javax.swing.JFrame implements LibraryView{
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(Constant.APP_NAME);
-        setMinimumSize(new java.awt.Dimension(1000, 625));
+        setMinimumSize(new java.awt.Dimension(1000, 425));
         setName("mainFrame"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(1000, 625));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         sideMenu.setBackground(new java.awt.Color(54, 70, 78));
@@ -173,13 +172,13 @@ public class Main extends javax.swing.JFrame implements LibraryView{
                 .addComponent(sideMenuCHPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(sideMenuHPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(426, Short.MAX_VALUE))
+                .addContainerGap(344, Short.MAX_VALUE))
         );
 
         sideMenuCHPanel.getAccessibleContext().setAccessibleName("sideMenu1");
         sideMenuHPanel.getAccessibleContext().setAccessibleName("sideMenu2");
 
-        getContentPane().add(sideMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 552));
+        getContentPane().add(sideMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 470));
 
         featuresPane.setLayout(new java.awt.CardLayout());
 
