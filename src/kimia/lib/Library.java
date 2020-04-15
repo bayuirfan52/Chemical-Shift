@@ -260,6 +260,7 @@ public class Library {
         for(Error err : e){
             if (err.getTotalCountId() == currentTotal){
                 value =  true;
+                break;
             }
         }
         return value;
