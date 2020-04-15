@@ -90,8 +90,7 @@ public class Library {
         
         return output;
     }
-
-    @SuppressWarnings("SleepWhileInLoop")
+    
     public ArrayList<CH> predictCH(double input, ArrayList<CH> data){
         ArrayList<CH> output = new ArrayList<>();
         ArrayList<Error> errors = new ArrayList<>();
@@ -104,7 +103,7 @@ public class Library {
             for (int j = 0; j < data.size(); j++){
                 int k = 0;
                 while (k < data.size()) {
-                    double err = Math.abs(input - Constant.CH2 - data.get(i).getData() - data.get(j).getData() - data.get(k).getData());
+                    double err = Math.abs(input - Constant.CH - data.get(i).getData() - data.get(j).getData() - data.get(k).getData());
                     Error foundErrorData = new Error();
 
                     Log.d("ERR | CURRENT",err + " | " + currentError);
@@ -187,7 +186,7 @@ public class Library {
             for (int j = 0; j < data.size(); j++){
                 int k = 0;
                 while (k < data.size()) {
-                    double err = Math.abs(input - Constant.CH2 - data.get(i).getCis() - data.get(j).getGem() - data.get(k).getTrans());
+                    double err = Math.abs(input - Constant.H - data.get(i).getCis() - data.get(j).getGem() - data.get(k).getTrans());
                     Error foundErrorData = new Error();
                     Log.d("ERR | CURRENT",err + " | " + currentError);
                     if (currentError != err){
