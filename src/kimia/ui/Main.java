@@ -119,7 +119,7 @@ public class Main extends javax.swing.JFrame implements LibraryView{
 
         sideMenuCH.setForeground(new java.awt.Color(255, 255, 255));
         sideMenuCH.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        sideMenuCH.setText("CH");
+        sideMenuCH.setText("Gugus Fungsi CH");
         sideMenuCH.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout sideMenuCHPanelLayout = new javax.swing.GroupLayout(sideMenuCHPanel);
@@ -148,7 +148,7 @@ public class Main extends javax.swing.JFrame implements LibraryView{
 
         sideMenuH.setForeground(new java.awt.Color(255, 255, 255));
         sideMenuH.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        sideMenuH.setText("H");
+        sideMenuH.setText("Gugus Fungsi H");
         sideMenuH.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout sideMenuHPanelLayout = new javax.swing.GroupLayout(sideMenuHPanel);
@@ -191,7 +191,8 @@ public class Main extends javax.swing.JFrame implements LibraryView{
         jLabel3.setText("Input Data");
         jLabel3.setToolTipText("");
 
-        jLabel4.setText("Kelompok Pergeseran");
+        jLabel4.setText("Gugus Fungsi");
+        jLabel4.setToolTipText("");
 
         chBox.setText("CH");
 
@@ -393,7 +394,13 @@ public class Main extends javax.swing.JFrame implements LibraryView{
             lib = new Library(this);
             chArrayList.clear();
             chArrayList.addAll(CSVReader.loadCHData(CH_FILENAME));
-            double input = Double.parseDouble(inputTextField.getText());
+            
+            String textInput = inputTextField.getText();
+            if (textInput.contains(",")) {
+                textInput = textInput.replaceAll(",", ".");
+            }
+            
+            double input = Double.parseDouble(textInput);
 
             if (chBox.isSelected()){
                 Runnable chRun = () -> {
@@ -455,7 +462,11 @@ public class Main extends javax.swing.JFrame implements LibraryView{
             lib = new Library(this);
             hArrayList.clear();
             hArrayList.addAll(CSVReader.loadHData(H_FILENAME));
-            double input = Double.parseDouble(inputHTextField.getText());
+            String textInput = inputHTextField.getText();
+            if (textInput.contains(",")) {
+                textInput = textInput.replaceAll(",", ".");
+            }
+            double input = Double.parseDouble(textInput);
             
             Runnable r = () -> {
                 progressHBar.setVisible(true);
