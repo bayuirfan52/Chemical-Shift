@@ -10,11 +10,20 @@ import java.util.Objects;
 import kimia.ui.dialog.Alert;
 import static kimia.utils.Constant.COMMA_REGEX;
 
+/**
+ * CSV Reader class specific to load data from csv file on this program
+ * @author BAYU IRFAN
+ */
 public class CSVReader {
     private static String line = "";
     private static BufferedReader csvReader = null;
     private static ClassLoader classLoader;
 
+    /**
+     * Load CH csv data on resource
+     * @param filename
+     * @return 
+     */
     public static ArrayList<CH> loadCHData(String filename){
         ArrayList<CH> listCH = new ArrayList<>();
         try{
@@ -38,6 +47,11 @@ public class CSVReader {
         return listCH;
     }
 
+    /**
+     * Load H csv data on resource
+     * @param filename
+     * @return 
+     */
     public static ArrayList<H> loadHData(String filename){
         ArrayList<H> listH = new ArrayList<>();
         try{

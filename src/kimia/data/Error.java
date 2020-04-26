@@ -1,5 +1,9 @@
 package kimia.data;
 
+/**
+ * POJO Class for get predict value on Library class
+ * @author BAYU IRFAN
+ */
 public class Error{
     private int idR1;
     private int idR2;

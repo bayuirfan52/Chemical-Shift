@@ -9,12 +9,22 @@ import kimia.utils.Log;
 
 import java.util.ArrayList;
 
+/**
+ * Main predict library on this application
+ * @author BAYU IRFAN
+ */
 public class Library {
     private final LibraryView view;
     public Library(LibraryView libraryView){
         this.view = libraryView;
     }
     
+    /**
+     * Predict CH2 group
+     * @param input
+     * @param data
+     * @return ArrayList
+     */
     public ArrayList<CH> predictCH2(double input, ArrayList<CH> data){
         ArrayList<CH> output = new ArrayList<>();
         ArrayList<Error> errors = new ArrayList<>();
@@ -92,6 +102,12 @@ public class Library {
         return output;
     }
     
+    /**
+     * Predict CH group
+     * @param input
+     * @param data
+     * @return ArrayList
+     */
     public ArrayList<CH> predictCH(double input, ArrayList<CH> data){
         ArrayList<CH> output = new ArrayList<>();
         ArrayList<Error> errors = new ArrayList<>();
@@ -177,7 +193,12 @@ public class Library {
         return output;
     }
 
-    @SuppressWarnings("SleepWhileInLoop")
+    /**
+     * Predict H group
+     * @param input
+     * @param data
+     * @return ArrayList
+     */
     public ArrayList<H> predictCisTransGem(double input, ArrayList<H> data){
         ArrayList<H> output = new ArrayList<>();
         ArrayList<Error> errors = new ArrayList<>();
@@ -257,6 +278,12 @@ public class Library {
         return output;
     }
     
+    /**
+     * Check duplicate member on Array
+     * @param e
+     * @param currentTotal
+     * @return 
+     */
     private static boolean isHasDuplicate(ArrayList<Error> e, int currentTotal){
         boolean value = false;
         for(Error err : e){

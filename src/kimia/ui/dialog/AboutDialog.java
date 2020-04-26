@@ -95,7 +95,7 @@ public final class AboutDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
+    /** Use this static method to show About dialog
      */
     public static void showDialog() {
         /* Set the Nimbus look and feel */

@@ -78,7 +78,7 @@ public final class Alert extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
+    /** Use this method if you want to show alert dialog
      * @param title
      * @param message
      */

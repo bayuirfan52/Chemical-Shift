@@ -26,7 +26,7 @@ import kimia.utils.CSVReader;
 import kimia.utils.Constant;
 import kimia.utils.Log;
 
-public final class Main extends javax.swing.JFrame implements LibraryView{
+public final class Main extends javax.swing.JFrame implements LibraryView {
 
     /**
      * Creates new form Main
@@ -39,7 +39,12 @@ public final class Main extends javax.swing.JFrame implements LibraryView{
     private final String H_FILENAME = "h";
     private double input;
     private ResourceBundle bundle;
+    /**
+     * Change this to set BuildConfig DEBUG if you want to show the logging info
+     * RELEASE if you want to hide all logging. Set this to deploy into user.
+     */
     public static int CONFIG;
+
     /**
      *
      */
@@ -52,14 +57,10 @@ public final class Main extends javax.swing.JFrame implements LibraryView{
         bundle = ResourceBundle.getBundle("value/strings");
         try {
             this.setIconImage(new ImageIcon(Toolkit.getDefaultToolkit().getClass().getResource("/res/images/icon.png")).getImage());
-        } catch(Exception e) {
+        } catch (Exception e) {
             Log.e("IMAGE EXCEPTION", e.getLocalizedMessage());
         }
-        
-        /** Change this to set BuildConfig
-         * DEBUG if you want to show the logging info
-         * RELEASE if you want to hide all logging. Set this to deploy into user.
-         */
+
         CONFIG = Constant.RELEASE;
     }
 
@@ -395,9 +396,9 @@ public final class Main extends javax.swing.JFrame implements LibraryView{
 
     private void processButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_processButtonActionPerformed
         // TODO add your handling code here:
-        if (inputTextField.getText().equalsIgnoreCase("")){
+        if (inputTextField.getText().equalsIgnoreCase("")) {
             Alert.showDialog("Alert", "Input harus diisi");
-        } else if (!ch2Box.isSelected() && !chBox.isSelected()){
+        } else if (!ch2Box.isSelected() && !chBox.isSelected()) {
             Alert.showDialog("Alert", "Pilih mode prediksi");
         } else {
             lib = new Library(this);
@@ -407,16 +408,16 @@ public final class Main extends javax.swing.JFrame implements LibraryView{
             if (textInput.contains(",")) {
                 textInput = textInput.replaceAll(",", ".");
             }
-            
+
             try {
                 input = Double.parseDouble(textInput);
-            } catch(NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 Alert.showDialog(bundle.getString("wrong_format"), bundle.getString("input_format_error"));
                 return;
             }
-                        
+
             progressBar.setVisible(true);
-            if (chBox.isSelected()){
+            if (chBox.isSelected()) {
                 Runnable chRun = () -> {
                     execCH(input);
                 };
@@ -424,7 +425,7 @@ public final class Main extends javax.swing.JFrame implements LibraryView{
                 chThread.start();
             }
 
-            if (ch2Box.isSelected()){
+            if (ch2Box.isSelected()) {
                 Runnable ch2Run = () -> {
                     execCH2(input);
                 };
@@ -466,7 +467,7 @@ public final class Main extends javax.swing.JFrame implements LibraryView{
 
     private void processHButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_processHButtonActionPerformed
         // TODO add your handling code here:
-        if (inputHTextField.getText().equalsIgnoreCase("")){
+        if (inputHTextField.getText().equalsIgnoreCase("")) {
             Alert.showDialog("Alert", "Input harus diisi");
         } else {
             lib = new Library(this);
@@ -478,11 +479,11 @@ public final class Main extends javax.swing.JFrame implements LibraryView{
             }
             try {
                 input = Double.parseDouble(textInput);
-            } catch(NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 Alert.showDialog(bundle.getString("wrong_format"), bundle.getString("input_format_error"));
                 return;
             }
-                   
+
             progressHBar.setVisible(true);
             Runnable r = () -> {
                 ArrayList<H> resultH = new ArrayList<>();
@@ -493,11 +494,11 @@ public final class Main extends javax.swing.JFrame implements LibraryView{
                 }
                 listH.setModel(h);
             };
-            
+
             Thread hRun = new Thread(r);
             hRun.start();
         }
-        
+
     }//GEN-LAST:event_processHButtonActionPerformed
 
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
@@ -525,7 +526,7 @@ public final class Main extends javax.swing.JFrame implements LibraryView{
             java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         //</editor-fold>
 
         /* Create and display the form */
@@ -569,10 +570,6 @@ public final class Main extends javax.swing.JFrame implements LibraryView{
     private javax.swing.JPanel sideMenuHPanel;
     // End of variables declaration//GEN-END:variables
 
-    /**
-     *
-     * @param progress
-     */
     @Override
     public void updateProgressCH(int progress) {
         progressBar.setValue(progress);
@@ -580,10 +577,6 @@ public final class Main extends javax.swing.JFrame implements LibraryView{
         progressBar.setVisible(true);
     }
 
-    /**
-     *
-     * @param progress
-     */
     @Override
     public void updateProgressH(int progress) {
         progressHBar.setValue(progress);
@@ -603,8 +596,8 @@ public final class Main extends javax.swing.JFrame implements LibraryView{
         progressHBar.setString(String.valueOf(0) + "%");
         progressHBar.setVisible(false);
     }
-    
-    private void execCH(double input){
+
+    private void execCH(double input) {
         ArrayList<CH> resultCH = new ArrayList<>();
         resultCH.addAll(lib.predictCH(input, chArrayList));
         DefaultListModel<String> ch = new DefaultListModel<>();
@@ -613,12 +606,12 @@ public final class Main extends javax.swing.JFrame implements LibraryView{
         }
         listCH.setModel(ch);
     }
-    
-    private void execCH2(double input){
+
+    private void execCH2(double input) {
         ArrayList<CH> resultCH2 = new ArrayList<>();
         resultCH2.addAll(lib.predictCH2(input, chArrayList));
         DefaultListModel<String> ch = new DefaultListModel<>();
-        for (int i = 0; i < resultCH2.size(); i++){
+        for (int i = 0; i < resultCH2.size(); i++) {
             ch.add(i, "CH2" + resultCH2.get(i).getR());
         }
         listCH2.setModel(ch);

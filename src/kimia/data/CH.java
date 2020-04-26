@@ -1,5 +1,9 @@
 package kimia.data;
 
+/**
+ * POJO CH Class to initialize data from csv file
+ * @author BAYU IRFAN
+ */
 public class CH {
     private int id;
     private double data;
