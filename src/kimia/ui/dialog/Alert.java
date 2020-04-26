@@ -5,11 +5,15 @@
  */
 package kimia.ui.dialog;
 
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
+import kimia.utils.Log;
+
 /**
  *
  * @author bayuirfan
  */
-public class Alert extends javax.swing.JDialog {
+public final class Alert extends javax.swing.JDialog {
 
     /**
      * Creates new form Alert
@@ -19,6 +23,11 @@ public class Alert extends javax.swing.JDialog {
     public Alert(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        try {
+            this.setIconImage(new ImageIcon(Toolkit.getDefaultToolkit().getClass().getResource("/res/images/icon.png")).getImage());
+        } catch(Exception e) {
+            Log.e("IMAGE EXCEPTION", e.getLocalizedMessage());
+        }
     }
 
     /**
@@ -50,9 +59,9 @@ public class Alert extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(messageText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 332, Short.MAX_VALUE)
+                    .addComponent(messageText, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -61,9 +70,9 @@ public class Alert extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(messageText, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(okButton)
-                .addContainerGap())
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
@@ -112,7 +121,7 @@ public class Alert extends javax.swing.JDialog {
             dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
-                    System.exit(0);
+                    dialog.dispose();
                 }
             });
             dialog.setVisible(true);

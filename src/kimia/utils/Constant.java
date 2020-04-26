@@ -8,4 +8,6 @@ public class Constant {
     public static final String EXTENSION_CSV = ".csv";
     public static final String COMMA_REGEX = ",";
     public static final String VERSION_CODES = "1.0.0";
+    public static final int DEBUG = 0;
+    public static final int RELEASE = 1;
 }

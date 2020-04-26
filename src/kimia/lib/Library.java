@@ -88,6 +88,7 @@ public class Library {
             output.add(ch);
         });
         
+        view.progressCHOnCompleteListener();
         return output;
     }
     
@@ -172,6 +173,7 @@ public class Library {
             output.add(ch);
         });
             
+        view.progressCHOnCompleteListener();
         return output;
     }
 
@@ -251,6 +253,7 @@ public class Library {
             output.add(h);
         });
             
+        view.progressHOnCompleteListener();
         return output;
     }
     

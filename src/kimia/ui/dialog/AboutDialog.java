@@ -5,13 +5,16 @@
  */
 package kimia.ui.dialog;
 
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 import kimia.utils.Constant;
+import kimia.utils.Log;
 
 /**
  *
  * @author bayuirfan
  */
-public class AboutDialog extends javax.swing.JDialog {
+public final class AboutDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form AboutDialog
@@ -23,6 +26,11 @@ public class AboutDialog extends javax.swing.JDialog {
         initComponents();
         version.setText(Constant.VERSION_CODES);
         setTitle("About");
+        try {
+            this.setIconImage(new ImageIcon(Toolkit.getDefaultToolkit().getClass().getResource("/res/images/icon.png")).getImage());
+        } catch(Exception e) {
+            Log.e("IMAGE EXCEPTION", e.getLocalizedMessage());
+        }
     }
 
     /**
@@ -58,16 +66,16 @@ public class AboutDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(131, 131, 131)
-                        .addComponent(jLabel2)
-                        .addGap(32, 32, 32)
-                        .addComponent(version))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(36, 36, 36)
-                        .addComponent(jLabel4)))
+                        .addComponent(jLabel4))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(134, 134, 134)
+                        .addComponent(jLabel2)
+                        .addGap(32, 32, 32)
+                        .addComponent(version)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -76,12 +84,12 @@ public class AboutDialog extends javax.swing.JDialog {
                 .addGap(54, 54, 54)
                 .addComponent(jLabel4)
                 .addGap(47, 47, 47)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(version))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
         pack();

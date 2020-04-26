@@ -13,6 +13,7 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import kimia.data.CH;
@@ -25,7 +26,7 @@ import kimia.utils.CSVReader;
 import kimia.utils.Constant;
 import kimia.utils.Log;
 
-public class Main extends javax.swing.JFrame implements LibraryView{
+public final class Main extends javax.swing.JFrame implements LibraryView{
 
     /**
      * Creates new form Main
@@ -36,7 +37,9 @@ public class Main extends javax.swing.JFrame implements LibraryView{
     private final ArrayList<H> hArrayList = new ArrayList();
     private final String CH_FILENAME = "ch";
     private final String H_FILENAME = "h";
-    
+    private double input;
+    private ResourceBundle bundle;
+    public static int CONFIG;
     /**
      *
      */
@@ -46,12 +49,18 @@ public class Main extends javax.swing.JFrame implements LibraryView{
         progressBar.setVisible(false);
         progressHBar.setVisible(false);
         this.setLocationRelativeTo(null);
-        
+        bundle = ResourceBundle.getBundle("value/strings");
         try {
             this.setIconImage(new ImageIcon(Toolkit.getDefaultToolkit().getClass().getResource("/res/images/icon.png")).getImage());
         } catch(Exception e) {
             Log.e("IMAGE EXCEPTION", e.getLocalizedMessage());
         }
+        
+        /** Change this to set BuildConfig
+         * DEBUG if you want to show the logging info
+         * RELEASE if you want to hide all logging. Set this to deploy into user.
+         */
+        CONFIG = Constant.RELEASE;
     }
 
     /**
@@ -394,19 +403,22 @@ public class Main extends javax.swing.JFrame implements LibraryView{
             lib = new Library(this);
             chArrayList.clear();
             chArrayList.addAll(CSVReader.loadCHData(CH_FILENAME));
-            
             String textInput = inputTextField.getText();
             if (textInput.contains(",")) {
                 textInput = textInput.replaceAll(",", ".");
             }
             
-            double input = Double.parseDouble(textInput);
-
+            try {
+                input = Double.parseDouble(textInput);
+            } catch(NumberFormatException e) {
+                Alert.showDialog(bundle.getString("wrong_format"), bundle.getString("input_format_error"));
+                return;
+            }
+                        
+            progressBar.setVisible(true);
             if (chBox.isSelected()){
                 Runnable chRun = () -> {
-                    progressBar.setVisible(true);
                     execCH(input);
-                    progressBar.setVisible(false);
                 };
                 Thread chThread = new Thread(chRun);
                 chThread.start();
@@ -414,9 +426,7 @@ public class Main extends javax.swing.JFrame implements LibraryView{
 
             if (ch2Box.isSelected()){
                 Runnable ch2Run = () -> {
-                    progressBar.setVisible(true);
                     execCH2(input);
-                    progressBar.setVisible(false);
                 };
                 Thread ch2Thread = new Thread(ch2Run);
                 ch2Thread.start();
@@ -466,10 +476,15 @@ public class Main extends javax.swing.JFrame implements LibraryView{
             if (textInput.contains(",")) {
                 textInput = textInput.replaceAll(",", ".");
             }
-            double input = Double.parseDouble(textInput);
-            
+            try {
+                input = Double.parseDouble(textInput);
+            } catch(NumberFormatException e) {
+                Alert.showDialog(bundle.getString("wrong_format"), bundle.getString("input_format_error"));
+                return;
+            }
+                   
+            progressHBar.setVisible(true);
             Runnable r = () -> {
-                progressHBar.setVisible(true);
                 ArrayList<H> resultH = new ArrayList<>();
                 resultH.addAll(lib.predictCisTransGem(input, hArrayList));
                 DefaultListModel<String> h = new DefaultListModel<>();
@@ -477,7 +492,6 @@ public class Main extends javax.swing.JFrame implements LibraryView{
                     h.add(i, "H" + resultH.get(i).getR());
                 }
                 listH.setModel(h);
-                progressHBar.setVisible(false);
             };
             
             Thread hRun = new Thread(r);
@@ -563,6 +577,7 @@ public class Main extends javax.swing.JFrame implements LibraryView{
     public void updateProgressCH(int progress) {
         progressBar.setValue(progress);
         progressBar.setString(String.valueOf(progress) + "%");
+        progressBar.setVisible(true);
     }
 
     /**
@@ -573,6 +588,20 @@ public class Main extends javax.swing.JFrame implements LibraryView{
     public void updateProgressH(int progress) {
         progressHBar.setValue(progress);
         progressHBar.setString(String.valueOf(progress) + "%");
+    }
+
+    @Override
+    public void progressCHOnCompleteListener() {
+        progressBar.setValue(0);
+        progressHBar.setString(String.valueOf(0) + "%");
+        progressBar.setVisible(false);
+    }
+
+    @Override
+    public void progressHOnCompleteListener() {
+        progressHBar.setValue(0);
+        progressHBar.setString(String.valueOf(0) + "%");
+        progressHBar.setVisible(false);
     }
     
     private void execCH(double input){
