@@ -30,8 +30,6 @@ public class Library {
         ArrayList<Error> errors = new ArrayList<>();
         double currentError = 0;
         boolean firstStart = true;
-        int position = 0;
-
         view.updateProgressCH(0);
         for (int i = 0; i < data.size(); i++) {
             int j = 0;
@@ -39,7 +37,6 @@ public class Library {
                 double err = Math.abs(input - Constant.CH2 - data.get(i).getData() - data.get(j).getData());
                 Error foundErrorData = new Error();
 
-                Log.d("ERR | CURRENT", err + " | " + currentError);
                 if (currentError != err) {
                     if (firstStart) {
                         currentError = err;
@@ -58,8 +55,6 @@ public class Library {
                         errors.clear();
                         errors.add(foundErrorData);
                         currentError = err;
-                    } else {
-                        Log.d("FINDING_DATA", "continue Finding");
                     }
                 } else {
                     if (!isHasDuplicate(errors, data.get(i).getId() + data.get(j).getId())) {
@@ -69,13 +64,9 @@ public class Library {
                         foundErrorData.setIdR2(data.get(j).getId());
                         foundErrorData.setTotalCountId(data.get(i).getId() + data.get(j).getId());
                         errors.add(foundErrorData);
-                    } else {
-                        Log.d("FINDING_DATA", "Same Data. Continue Finding");
                     }
                 }
                 j++;
-
-                Log.d("UPDATE POSITION", String.valueOf(position++));
                 view.updateProgressCH(100 * i / data.size());
             }
         }
@@ -113,8 +104,6 @@ public class Library {
         ArrayList<Error> errors = new ArrayList<>();
         double currentError = 0;
         boolean firstStart = true;
-        int position = 0;
-
         view.updateProgressCH(0);
         for (int i = 0; i < data.size(); i++){
             for (int j = 0; j < data.size(); j++){
@@ -122,8 +111,6 @@ public class Library {
                 while (k < data.size()) {
                     double err = Math.abs(input - Constant.CH - data.get(i).getData() - data.get(j).getData() - data.get(k).getData());
                     Error foundErrorData = new Error();
-
-                    Log.d("ERR | CURRENT",err + " | " + currentError);
                     if (currentError != err){
                         if (firstStart) {
                             currentError = err;
@@ -144,8 +131,6 @@ public class Library {
                             errors.clear();
                             errors.add(foundErrorData);
                             currentError = err;
-                        } else {
-                            Log.d("FINDING_DATA", "continue Finding");
                         }
                     } else {
                         if (!isHasDuplicate(errors, data.get(i).getId() + data.get(j).getId() + data.get(k).getId())) {
@@ -156,17 +141,11 @@ public class Library {
                             foundErrorData.setIdR3(data.get(k).getId());
                             foundErrorData.setTotalCountId(data.get(i).getId() + data.get(j).getId() + data.get(k).getId());
                             errors.add(foundErrorData);
-                        } else {
-                            Log.d("FINDING_DATA", "Same Data. Continue Finding");
                         }
                     }
-                    Log.d("UPDATE POSITION", String.valueOf(position++));
                     k++;
                 }
-                Log.d("END J = " + j, "------------------------ J -----------------------");
             }
-            Log.d("END I = " + i, "------------------------ I -----------------------");
-
             view.updateProgressCH(100 * i / data.size());
         }
 
@@ -204,14 +183,12 @@ public class Library {
         ArrayList<Error> errors = new ArrayList<>();
         double currentError = 0;
         boolean firstStart = true;
-        int position = 0;
         for (int i = 0; i < data.size(); i++){
             for (int j = 0; j < data.size(); j++){
                 int k = 0;
                 while (k < data.size()) {
                     double err = Math.abs(input - Constant.H - data.get(i).getCis() - data.get(j).getGem() - data.get(k).getTrans());
                     Error foundErrorData = new Error();
-                    Log.d("ERR | CURRENT",err + " | " + currentError);
                     if (currentError != err){
                         if (firstStart) {
                             firstStart = false;
@@ -232,8 +209,6 @@ public class Library {
                             errors.clear();
                             errors.add(foundErrorData);
                             currentError = err;
-                        } else {
-                            Log.d("FINDING_DATA", "continue Finding");
                         }
                     } else {
                         if (!isHasDuplicate(errors, data.get(i).getId() + data.get(j).getId() + data.get(k).getId())){
@@ -244,12 +219,9 @@ public class Library {
                             foundErrorData.setIdR3(data.get(k).getId());
                             foundErrorData.setTotalCountId(data.get(i).getId() + data.get(j).getId() + data.get(k).getId());
                             errors.add(foundErrorData);
-                        } else {
-                            Log.d("FINDING_DATA", "Same Data. Continue Finding");
                         }
                     }
                     k++;
-                    Log.d("UPDATE POSITION", String.valueOf(position++));
                 }
             }
 
