@@ -77,11 +77,11 @@ public class Library {
 
             data.stream().map((dataCH) -> {
                 if (error.getIdR1() == dataCH.getId()) {
-                    allR.append(" - ").append(dataCH.getR());
+                    allR.append(" - ").append(toBoldString(dataCH.getR()));
                 }
                 return dataCH;
             }).filter((dataCH) -> (error.getIdR2() == dataCH.getId())).forEachOrdered((dataCH) -> {
-                allR.append(" - ").append(dataCH.getR());
+                allR.append(" - ").append(toBoldString(dataCH.getR()));
             });
             ch.setData(error.getError());
             ch.setR(allR.toString());
@@ -153,13 +153,13 @@ public class Library {
             CH ch = new CH();
             StringBuilder allR = new StringBuilder();
             data.stream().map((dataCH) -> {
-                if (error.getIdR1() == dataCH.getId()) allR.append(" - ").append(dataCH.getR());
+                if (error.getIdR1() == dataCH.getId()) allR.append(" - ").append(toBoldString(dataCH.getR()));
                 return dataCH;
             }).map((dataCH) -> {
-                if (error.getIdR2() == dataCH.getId()) allR.append(" - ").append(dataCH.getR());
+                if (error.getIdR2() == dataCH.getId()) allR.append(" - ").append(toBoldString(dataCH.getR()));
                 return dataCH;
             }).filter((dataCH) -> (error.getIdR3() == dataCH.getId())).forEachOrdered((dataCH) -> {
-                allR.append(" - ").append(dataCH.getR());
+                allR.append(" - ").append(toBoldString(dataCH.getR()));
             });
 
             ch.setData(error.getError());
@@ -232,13 +232,13 @@ public class Library {
             H h = new H();
             StringBuilder allR = new StringBuilder();
             data.stream().map((dataH) -> {
-                if (error.getIdR1() == dataH.getId()) allR.append(" - ").append(dataH.getR());
+                if (error.getIdR1() == dataH.getId()) allR.append(" - ").append(toBoldString(dataH.getR()));
                 return dataH;
             }).map((dataH) -> {
-                if (error.getIdR2() == dataH.getId()) allR.append(" - ").append(dataH.getR());
+                if (error.getIdR2() == dataH.getId()) allR.append(" - ").append(toBoldString(dataH.getR()));
                 return dataH;
             }).filter((dataH) -> (error.getIdR3() == dataH.getId())).forEachOrdered((dataH) -> {
-                allR.append(" - ").append(dataH.getR());
+                allR.append(" - ").append(toBoldString(dataH.getR()));
             });
             
             h.setR(allR.toString());
@@ -265,5 +265,9 @@ public class Library {
             }
         }
         return value;
+    }
+    
+    private static String toBoldString(String input){
+        return "<b>" + input + "</b>";
     }
 }

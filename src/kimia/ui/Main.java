@@ -61,7 +61,7 @@ public final class Main extends javax.swing.JFrame implements LibraryView {
             Log.e("IMAGE EXCEPTION", e.getLocalizedMessage());
         }
 
-        CONFIG = Constant.RELEASE;
+        CONFIG = Constant.DEBUG;
     }
 
     /**
@@ -397,9 +397,9 @@ public final class Main extends javax.swing.JFrame implements LibraryView {
     private void processButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_processButtonActionPerformed
         // TODO add your handling code here:
         if (inputTextField.getText().equalsIgnoreCase("")) {
-            Alert.showDialog("Alert", "Input harus diisi");
+            Alert.showDialog(bundle.getString("alert"), bundle.getString("input_empty"));
         } else if (!ch2Box.isSelected() && !chBox.isSelected()) {
-            Alert.showDialog("Alert", "Pilih mode prediksi");
+            Alert.showDialog(bundle.getString("alert"), bundle.getString("input_not_selected"));
         } else {
             lib = new Library(this);
             chArrayList.clear();
@@ -447,28 +447,28 @@ public final class Main extends javax.swing.JFrame implements LibraryView {
 
     private void sideMenuCHPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sideMenuCHPanelMouseEntered
         // TODO add your handling code here:
-        sideMenuCHPanel.setBackground(Color.decode("#7E8987"));
+        sideMenuCHPanel.setBackground(Color.decode(bundle.getString("color_menu_light")));
     }//GEN-LAST:event_sideMenuCHPanelMouseEntered
 
     private void sideMenuHPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sideMenuHPanelMouseEntered
         // TODO add your handling code here:
-        sideMenuHPanel.setBackground(Color.decode("#7E8987"));
+        sideMenuHPanel.setBackground(Color.decode(bundle.getString("color_menu_light")));
     }//GEN-LAST:event_sideMenuHPanelMouseEntered
 
     private void sideMenuHPanelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sideMenuHPanelMouseExited
         // TODO add your handling code here:
-        sideMenuHPanel.setBackground(Color.decode("#36464E"));
+        sideMenuHPanel.setBackground(Color.decode(bundle.getString("color_menu_dark")));
     }//GEN-LAST:event_sideMenuHPanelMouseExited
 
     private void sideMenuCHPanelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sideMenuCHPanelMouseExited
         // TODO add your handling code here:
-        sideMenuCHPanel.setBackground(Color.decode("#36464E"));
+        sideMenuCHPanel.setBackground(Color.decode(bundle.getString("color_menu_dark")));
     }//GEN-LAST:event_sideMenuCHPanelMouseExited
 
     private void processHButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_processHButtonActionPerformed
         // TODO add your handling code here:
         if (inputHTextField.getText().equalsIgnoreCase("")) {
-            Alert.showDialog("Alert", "Input harus diisi");
+            Alert.showDialog(bundle.getString("alert"), bundle.getString("input_empty"));
         } else {
             lib = new Library(this);
             hArrayList.clear();
@@ -490,7 +490,7 @@ public final class Main extends javax.swing.JFrame implements LibraryView {
                 resultH.addAll(lib.predictCisTransGem(input, hArrayList));
                 DefaultListModel<String> h = new DefaultListModel<>();
                 for (int i = 0; i < resultH.size(); i++) {
-                    h.add(i, "H" + resultH.get(i).getR());
+                    h.add(i, "<html>H" + resultH.get(i).getR() + "</html>");
                 }
                 listH.setModel(h);
             };
@@ -602,7 +602,7 @@ public final class Main extends javax.swing.JFrame implements LibraryView {
         resultCH.addAll(lib.predictCH(input, chArrayList));
         DefaultListModel<String> ch = new DefaultListModel<>();
         for (int i = 0; i < resultCH.size(); i++) {
-            ch.add(i, "CH" + resultCH.get(i).getR());
+            ch.add(i, "<html>CH" + resultCH.get(i).getR() + "</html>");
         }
         listCH.setModel(ch);
     }
@@ -612,7 +612,7 @@ public final class Main extends javax.swing.JFrame implements LibraryView {
         resultCH2.addAll(lib.predictCH2(input, chArrayList));
         DefaultListModel<String> ch = new DefaultListModel<>();
         for (int i = 0; i < resultCH2.size(); i++) {
-            ch.add(i, "CH2" + resultCH2.get(i).getR());
+            ch.add(i, "<html>CH<sub>2</sub>" + resultCH2.get(i).getR() + "</html>");
         }
         listCH2.setModel(ch);
     }
