@@ -164,7 +164,7 @@ public class Library {
 
             ch.setData(error.getError());
             ch.setR(allR.toString());
-            Log.i("DATA_FOUND", "data found = " + error.getError() + ", value = CH2" + allR.toString());
+            Log.i("DATA_FOUND", "data found = " + error.getError() + ", value = CH" + allR.toString());
             output.add(ch);
         });
             
