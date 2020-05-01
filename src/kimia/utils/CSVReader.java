@@ -28,7 +28,7 @@ public class CSVReader {
         ArrayList<CH> listCH = new ArrayList<>();
         try{
             classLoader = Thread.currentThread().getContextClassLoader();
-            InputStream inputStream = classLoader.getResourceAsStream("raw/" + filename + Constant.EXTENSION_CSV);
+            InputStream inputStream = classLoader.getResourceAsStream("res/raw/" + filename + Constant.EXTENSION_CSV);
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
             csvReader = new BufferedReader(inputStreamReader);
             while ((line = csvReader.readLine()) != null){
@@ -56,7 +56,7 @@ public class CSVReader {
         ArrayList<H> listH = new ArrayList<>();
         try{
             classLoader = Thread.currentThread().getContextClassLoader();
-            InputStream inputStream = classLoader.getResourceAsStream("raw/" + filename + Constant.EXTENSION_CSV);
+            InputStream inputStream = classLoader.getResourceAsStream("res/raw/" + filename + Constant.EXTENSION_CSV);
             InputStreamReader inputStreamReader = new InputStreamReader(Objects.requireNonNull(inputStream), StandardCharsets.UTF_8);
             csvReader = new BufferedReader(inputStreamReader);
             while ((line = csvReader.readLine()) != null){
