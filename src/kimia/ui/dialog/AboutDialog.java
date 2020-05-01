@@ -8,6 +8,7 @@ package kimia.ui.dialog;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import kimia.utils.Constant;
+import static kimia.utils.Constant.ABOUT_MESSAGE;
 import kimia.utils.Log;
 
 /**
@@ -31,6 +32,9 @@ public final class AboutDialog extends javax.swing.JDialog {
         } catch(Exception e) {
             Log.e("IMAGE EXCEPTION", e.getLocalizedMessage());
         }
+        
+        aboutText.setText(ABOUT_MESSAGE);
+        image.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getClass().getResource("/res/images/icon.png")));
     }
 
     /**
@@ -42,22 +46,19 @@ public final class AboutDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        aboutText = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         version = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        image = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("value/strings"); // NOI18N
-        jLabel1.setText(bundle.getString("about_text")); // NOI18N
-        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        aboutText.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        aboutText.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         jLabel2.setText("Version");
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon.png"))); // NOI18N
-        jLabel4.setLabelFor(jLabel1);
+        image.setLabelFor(aboutText);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -67,10 +68,10 @@ public final class AboutDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(24, 24, 24)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(aboutText, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(36, 36, 36)
-                        .addComponent(jLabel4))
+                        .addComponent(image))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(134, 134, 134)
                         .addComponent(jLabel2)
@@ -82,14 +83,14 @@ public final class AboutDialog extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(54, 54, 54)
-                .addComponent(jLabel4)
+                .addComponent(image)
                 .addGap(47, 47, 47)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(aboutText)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(version))
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addContainerGap(464, Short.MAX_VALUE))
         );
 
         pack();
@@ -132,9 +133,9 @@ public final class AboutDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel aboutText;
+    private javax.swing.JLabel image;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel version;
     // End of variables declaration//GEN-END:variables
 }

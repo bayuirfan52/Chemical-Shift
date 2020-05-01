@@ -1,7 +1,7 @@
 package kimia.utils;
 
 /**
- * Class for Initialze Default value on the program
+ * Class for Initialize Default value on the program
  * @author BAYU IRFAN
  */
 public class Constant {
@@ -42,4 +42,15 @@ public class Constant {
      * Use this Constant to deploy this app
      */
     public static final int RELEASE = 1;
+    
+    
+    public static final String INPUT_FORMAT_ERROR = "<html>Mohon maaf, format input yang anda masukkan salah. Harap perbaiki kembali!</html>";
+    public static final String WRONG_FORMAT = "Kesalahan format";
+    public static final String INPUT_EMPTY = "Input harus diisi";
+    public static final String INPUT_NOT_SELECTED = "Anda belum memilih mode prediksi";
+    public static final String ALERT = "Alert";
+    public static final String ABOUT_MESSAGE = "<html>Aplikasi prediksi senyawa dari pergeseran kimia dari alat NMR. Berguna untuk mempercepat proses prediksi yang sebelumnya dilakukan secara manual oleh para ahli kimia.</html>";
+    
+    public static final String COLOR_MENU_DARK = "#36464E";
+    public static final String COLOR_MENU_LIGHT = "#7E8987";
 }

@@ -13,7 +13,6 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import kimia.data.CH;
@@ -24,6 +23,13 @@ import kimia.ui.dialog.AboutDialog;
 import kimia.ui.dialog.Alert;
 import kimia.utils.CSVReader;
 import kimia.utils.Constant;
+import static kimia.utils.Constant.ALERT;
+import static kimia.utils.Constant.COLOR_MENU_DARK;
+import static kimia.utils.Constant.COLOR_MENU_LIGHT;
+import static kimia.utils.Constant.INPUT_EMPTY;
+import static kimia.utils.Constant.INPUT_FORMAT_ERROR;
+import static kimia.utils.Constant.INPUT_NOT_SELECTED;
+import static kimia.utils.Constant.WRONG_FORMAT;
 import kimia.utils.Log;
 
 public final class Main extends javax.swing.JFrame implements LibraryView {
@@ -38,7 +44,6 @@ public final class Main extends javax.swing.JFrame implements LibraryView {
     private final String CH_FILENAME = "ch";
     private final String H_FILENAME = "h";
     private double input;
-    private ResourceBundle bundle;
     /**
      * Change this to set BuildConfig DEBUG if you want to show the logging info
      * RELEASE if you want to hide all logging. Set this to deploy into user.
@@ -54,14 +59,13 @@ public final class Main extends javax.swing.JFrame implements LibraryView {
         progressBar.setVisible(false);
         progressHBar.setVisible(false);
         this.setLocationRelativeTo(null);
-        bundle = ResourceBundle.getBundle("value/strings");
         try {
             this.setIconImage(new ImageIcon(Toolkit.getDefaultToolkit().getClass().getResource("/res/images/icon.png")).getImage());
         } catch (Exception e) {
             Log.e("IMAGE EXCEPTION", e.getLocalizedMessage());
         }
 
-        CONFIG = Constant.DEBUG;
+        CONFIG = Constant.RELEASE;
     }
 
     /**
@@ -395,11 +399,10 @@ public final class Main extends javax.swing.JFrame implements LibraryView {
     }// </editor-fold>//GEN-END:initComponents
 
     private void processButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_processButtonActionPerformed
-        // TODO add your handling code here:
         if (inputTextField.getText().equalsIgnoreCase("")) {
-            Alert.showDialog(bundle.getString("alert"), bundle.getString("input_empty"));
+            Alert.showDialog(ALERT, INPUT_EMPTY);
         } else if (!ch2Box.isSelected() && !chBox.isSelected()) {
-            Alert.showDialog(bundle.getString("alert"), bundle.getString("input_not_selected"));
+            Alert.showDialog(ALERT, INPUT_NOT_SELECTED);
         } else {
             lib = new Library(this);
             chArrayList.clear();
@@ -412,7 +415,7 @@ public final class Main extends javax.swing.JFrame implements LibraryView {
             try {
                 input = Double.parseDouble(textInput);
             } catch (NumberFormatException e) {
-                Alert.showDialog(bundle.getString("wrong_format"), bundle.getString("input_format_error"));
+                Alert.showDialog(WRONG_FORMAT, INPUT_FORMAT_ERROR);
                 return;
             }
 
@@ -447,28 +450,28 @@ public final class Main extends javax.swing.JFrame implements LibraryView {
 
     private void sideMenuCHPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sideMenuCHPanelMouseEntered
         // TODO add your handling code here:
-        sideMenuCHPanel.setBackground(Color.decode(bundle.getString("color_menu_light")));
+        sideMenuCHPanel.setBackground(Color.decode(COLOR_MENU_LIGHT));
     }//GEN-LAST:event_sideMenuCHPanelMouseEntered
 
     private void sideMenuHPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sideMenuHPanelMouseEntered
         // TODO add your handling code here:
-        sideMenuHPanel.setBackground(Color.decode(bundle.getString("color_menu_light")));
+        sideMenuHPanel.setBackground(Color.decode(COLOR_MENU_LIGHT));
     }//GEN-LAST:event_sideMenuHPanelMouseEntered
 
     private void sideMenuHPanelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sideMenuHPanelMouseExited
         // TODO add your handling code here:
-        sideMenuHPanel.setBackground(Color.decode(bundle.getString("color_menu_dark")));
+        sideMenuHPanel.setBackground(Color.decode(COLOR_MENU_DARK));
     }//GEN-LAST:event_sideMenuHPanelMouseExited
 
     private void sideMenuCHPanelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sideMenuCHPanelMouseExited
         // TODO add your handling code here:
-        sideMenuCHPanel.setBackground(Color.decode(bundle.getString("color_menu_dark")));
+        sideMenuCHPanel.setBackground(Color.decode(COLOR_MENU_DARK));
     }//GEN-LAST:event_sideMenuCHPanelMouseExited
 
     private void processHButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_processHButtonActionPerformed
         // TODO add your handling code here:
         if (inputHTextField.getText().equalsIgnoreCase("")) {
-            Alert.showDialog(bundle.getString("alert"), bundle.getString("input_empty"));
+            Alert.showDialog(ALERT, INPUT_EMPTY);
         } else {
             lib = new Library(this);
             hArrayList.clear();
@@ -480,7 +483,7 @@ public final class Main extends javax.swing.JFrame implements LibraryView {
             try {
                 input = Double.parseDouble(textInput);
             } catch (NumberFormatException e) {
-                Alert.showDialog(bundle.getString("wrong_format"), bundle.getString("input_format_error"));
+                Alert.showDialog(WRONG_FORMAT, INPUT_FORMAT_ERROR);
                 return;
             }
 

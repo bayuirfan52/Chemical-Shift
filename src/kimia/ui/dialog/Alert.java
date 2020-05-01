@@ -6,6 +6,7 @@
 package kimia.ui.dialog;
 
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import kimia.utils.Log;
 
@@ -113,9 +114,9 @@ public final class Alert extends javax.swing.JDialog {
             Alert dialog = new Alert(new javax.swing.JFrame(), true);
             dialog.setTitle(title);
             dialog.messageText.setText(message);
-            dialog.okButton.addActionListener(
-                    al -> dialog.dispose()
-            );
+            dialog.okButton.addActionListener((ActionEvent al) -> {
+                dialog.dispose();
+            });
             
             dialog.setLocationRelativeTo(null);
             

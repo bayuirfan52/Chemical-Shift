@@ -21,7 +21,7 @@ public class Log {
      */
     public static void i(String TAG, String log) {
         if (Main.CONFIG == Constant.DEBUG) {
-            System.out.println(ANSI_YELLOW_BACKGROUND + dtf.format(now) + " | " + TAG + " - " + log + ANSI_RESET);
+            System.out.println(WHITE + ANSI_YELLOW_BACKGROUND + dtf.format(now) + " | " + TAG + " - " + log + ANSI_RESET);
         }
     }
 
@@ -49,4 +49,5 @@ public class Log {
 
     private static final String ANSI_YELLOW_BACKGROUND = "\u001B[43m";
     private static final String ANSI_RESET = "\u001B[0m";
+    public static final String WHITE = "\033[0;37m";
 }
